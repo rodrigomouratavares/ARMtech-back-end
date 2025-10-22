@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: armtech-flow-crm-backend
+    env: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: node dist/server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        fromService:
+          type: web
+          name: armtech-flow-crm-backend
+          property: port
+      - key: DATABASE_URL
+        sync: false  # Will be set manually in Render dashboard
+      - key: JWT_SECRET
+        sync: false  # Will be set manually in Render dashboard
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      - key: FRONTEND_URL
+        sync: false  # Will be set to your Vercel URL

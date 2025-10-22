@@ -1,0 +1,23 @@
+# Development files
+*.md
+*.log
+.env.example
+
+# Test files
+tests/
+vitest.config.ts
+
+# Development tools
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation
+docs/

@@ -4,10 +4,9 @@
     "description": "REST API backend for Flow CRM system",
     "main": "dist/server.js",
     "scripts": {
-        "build": "tsc",
+        "build": "rm -rf dist && tsc && echo 'Build completed successfully'",
         "start": "node dist/server.js",
-        "render-build": "npm install && npm run build",
-        "render-start": "node dist/server.js",
+        "postbuild": "ls -la dist/ && echo 'Dist directory contents verified'",
         "dev": "tsx watch src/server.ts",
         "test": "vitest --run",
         "test:watch": "vitest",
