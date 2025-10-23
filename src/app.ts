@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
 import { env } from './config/environment';
-import corsPlugin from './plugins/cors.plugin';
 import authPlugin from './plugins/auth.plugin';
 import databasePlugin from './plugins/database.plugin';
 import errorHandlerPlugin from './plugins/error-handler.plugin';
@@ -26,7 +26,12 @@ export const buildApp = () => {
   // Register plugins in order of dependency
   
   // 1. CORS plugin (should be registered early)
-  app.register(corsPlugin);
+  app.register(cors, {
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  });
 
   // 2. Database connection plugin
   app.register(databasePlugin);
