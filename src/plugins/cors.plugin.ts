@@ -7,7 +7,8 @@ const corsPlugin: FastifyPluginAsync = async (fastify) => {
     'http://localhost:5173', // Development
     'http://localhost:3000', // Development (alternative port)
     'http://127.0.0.1:5173', // Development (IP)
-    'https://flow-crm-pearl.vercel.app', // Production
+    'https://flow-crm-pearl.vercel.app', // Production (old)
+    'https://ar-mtech-front-end-4qfx.vercel.app', // Production (new)
     env.FRONTEND_URL // Environment variable
   ].filter(Boolean); // Remove undefined values
 
@@ -30,6 +31,12 @@ const corsPlugin: FastifyPluginAsync = async (fastify) => {
       // Allow localhost in any form for development
       if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
         console.log('Localhost origin - allowing');
+        return callback(null, true);
+      }
+
+      // Allow all Vercel domains for this project
+      if (origin.includes('ar-mtech-front-end') && origin.includes('vercel.app')) {
+        console.log('Vercel domain - allowing');
         return callback(null, true);
       }
 
