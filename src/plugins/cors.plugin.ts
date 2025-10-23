@@ -1,58 +1,24 @@
 import { FastifyPluginAsync } from 'fastify';
 import cors from '@fastify/cors';
-import { env } from '../config/environment';
 
 const corsPlugin: FastifyPluginAsync = async (fastify) => {
-  const allowedOrigins = [
-    'http://localhost:5173', // Development
-    'http://localhost:3000', // Development (alternative port)
-    'http://127.0.0.1:5173', // Development (IP)
-    'https://flow-crm-pearl.vercel.app', // Production (old)
-    'https://ar-mtech-front-end-4qfx.vercel.app', // Production (new)
-    env.FRONTEND_URL // Environment variable
-  ].filter(Boolean); // Remove undefined values
-
+  console.log('🔧 Configurando CORS...');
+  
   await fastify.register(cors, {
-    origin: true, // Temporariamente permite todas as origens para debug
-    // origin: (origin, callback) => {
-    //   console.log('CORS check for origin:', origin);
-
-    //   // Allow requests with no origin (mobile apps, curl, etc.)
-    //   if (!origin) {
-    //     console.log('No origin - allowing');
-    //     return callback(null, true);
-    //   }
-
-    //   // Check if origin is in allowed list
-    //   if (allowedOrigins.includes(origin)) {
-    //     console.log('Origin in allowed list - allowing');
-    //     return callback(null, true);
-    //   }
-
-    //   // Allow localhost in any form for development
-    //   if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
-    //     console.log('Localhost origin - allowing');
-    //     return callback(null, true);
-    //   }
-
-    //   // Allow all Vercel domains for this project
-    //   if (origin.includes('ar-mtech-front-end') && origin.includes('vercel.app')) {
-    //     console.log('Vercel domain - allowing');
-    //     return callback(null, true);
-    //   }
-
-    //   // In development, allow all origins
-    //   if (env.NODE_ENV === 'development') {
-    //     console.log('Development mode - allowing all');
-    //     return callback(null, true);
-    //   }
-
-    //   // Reject origin
-    //   console.log('Origin rejected:', origin);
-    //   callback(new Error('Not allowed by CORS'), false);
-    // },
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:3000', 
+      'http://127.0.0.1:5173',
+      'https://ar-mtech-front-end-4qfx.vercel.app',
+      'https://ar-mtech-front-end-4qfx-5cp1gz77z-rodrigo-tavares-projects.vercel.app',
+      /^https:\/\/ar-mtech-front-end.*\.vercel\.app$/
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   });
+
+  console.log('✅ CORS configurado com sucesso');
 };
 
 export default corsPlugin;
