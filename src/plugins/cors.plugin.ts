@@ -13,43 +13,44 @@ const corsPlugin: FastifyPluginAsync = async (fastify) => {
   ].filter(Boolean); // Remove undefined values
 
   await fastify.register(cors, {
-    origin: (origin, callback) => {
-      console.log('CORS check for origin:', origin);
+    origin: true, // Temporariamente permite todas as origens para debug
+    // origin: (origin, callback) => {
+    //   console.log('CORS check for origin:', origin);
 
-      // Allow requests with no origin (mobile apps, curl, etc.)
-      if (!origin) {
-        console.log('No origin - allowing');
-        return callback(null, true);
-      }
+    //   // Allow requests with no origin (mobile apps, curl, etc.)
+    //   if (!origin) {
+    //     console.log('No origin - allowing');
+    //     return callback(null, true);
+    //   }
 
-      // Check if origin is in allowed list
-      if (allowedOrigins.includes(origin)) {
-        console.log('Origin in allowed list - allowing');
-        return callback(null, true);
-      }
+    //   // Check if origin is in allowed list
+    //   if (allowedOrigins.includes(origin)) {
+    //     console.log('Origin in allowed list - allowing');
+    //     return callback(null, true);
+    //   }
 
-      // Allow localhost in any form for development
-      if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
-        console.log('Localhost origin - allowing');
-        return callback(null, true);
-      }
+    //   // Allow localhost in any form for development
+    //   if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+    //     console.log('Localhost origin - allowing');
+    //     return callback(null, true);
+    //   }
 
-      // Allow all Vercel domains for this project
-      if (origin.includes('ar-mtech-front-end') && origin.includes('vercel.app')) {
-        console.log('Vercel domain - allowing');
-        return callback(null, true);
-      }
+    //   // Allow all Vercel domains for this project
+    //   if (origin.includes('ar-mtech-front-end') && origin.includes('vercel.app')) {
+    //     console.log('Vercel domain - allowing');
+    //     return callback(null, true);
+    //   }
 
-      // In development, allow all origins
-      if (env.NODE_ENV === 'development') {
-        console.log('Development mode - allowing all');
-        return callback(null, true);
-      }
+    //   // In development, allow all origins
+    //   if (env.NODE_ENV === 'development') {
+    //     console.log('Development mode - allowing all');
+    //     return callback(null, true);
+    //   }
 
-      // Reject origin
-      console.log('Origin rejected:', origin);
-      callback(new Error('Not allowed by CORS'), false);
-    },
+    //   // Reject origin
+    //   console.log('Origin rejected:', origin);
+    //   callback(new Error('Not allowed by CORS'), false);
+    // },
     credentials: true,
   });
 };
