@@ -8,6 +8,9 @@ yarn-error.log*
 dist/
 build/
 
+# Mas mantém o arquivo de entrada do Render
+!src/dist/server.js
+
 # Environment variables
 .env
 .env.local
