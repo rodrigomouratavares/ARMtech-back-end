@@ -4,7 +4,7 @@
     "description": "REST API backend for Flow CRM system",
     "main": "server.js",
     "scripts": {
-        "build": "tsc",
+        "build": "tsc && mv dist/server.js dist/server.js.compiled 2>/dev/null || true",
         "start": "node server.js",
         "postbuild": "ls -la dist/ && echo 'Dist directory contents verified'",
         "dev": "tsx watch src/server.ts",
